@@ -1,8 +1,8 @@
-﻿using System;
+﻿using ConstructionLine.CodingChallenge.Tests.SampleData;
+using NUnit.Framework;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using ConstructionLine.CodingChallenge.Tests.SampleData;
-using NUnit.Framework;
 
 namespace ConstructionLine.CodingChallenge.Tests
 {
@@ -15,7 +15,7 @@ namespace ConstructionLine.CodingChallenge.Tests
         [SetUp]
         public void Setup()
         {
-            
+
             var dataBuilder = new SampleDataBuilder(50000);
 
             _shirts = dataBuilder.CreateShirts();
@@ -43,6 +43,27 @@ namespace ConstructionLine.CodingChallenge.Tests
             AssertResults(results.Shirts, options);
             AssertSizeCounts(_shirts, options, results.SizeCounts);
             AssertColorCounts(_shirts, options, results.ColorCounts);
+        }
+
+        [Test]
+        public void Fifty_Thousand_Records_Should_Be_Under_100_Milliseconds()
+        {
+            var sw = new Stopwatch();
+            sw.Start();
+
+            var options = new SearchOptions
+            {
+                Colors = new List<Color> { Color.Red }
+            };
+
+            var results = _searchEngine.Search(options);
+
+            sw.Stop();
+
+            AssertResults(results.Shirts, options);
+            AssertSizeCounts(_shirts, options, results.SizeCounts);
+            AssertColorCounts(_shirts, options, results.ColorCounts);
+            Assert.That(sw.ElapsedMilliseconds < 100);
         }
     }
 }

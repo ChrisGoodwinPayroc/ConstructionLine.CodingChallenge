@@ -10,7 +10,7 @@ namespace ConstructionLine.CodingChallenge.Tests.SampleData
 
         private readonly Random _random = new Random();
 
-        
+
         public SampleDataBuilder(int numberOfShirts)
         {
             _numberOfShirts = numberOfShirts;
@@ -25,10 +25,10 @@ namespace ConstructionLine.CodingChallenge.Tests.SampleData
                 .ToList();
         }
 
-       
+
         private Size GetRandomSize()
         {
-            
+
             var sizes = Size.All;
             var index = _random.Next(0, sizes.Count);
             return sizes.ElementAt(index);
